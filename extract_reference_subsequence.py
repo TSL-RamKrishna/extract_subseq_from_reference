@@ -8,6 +8,8 @@ from Bio import SeqIO
 parser=argparse.ArgumentParser(description="extract reference subsequnces using mapped positions", version="0.1")
 parser.add_argument("--reference", dest="reference", action="store", help="reference sequenced used in mapping the reads")
 parser.add_argument("--sam", dest="sam", action="store", help="sam file format of mapped reads")
+parser.add_argument("--left", dest="left", action="store", type=int, default=0, help="Number of bases at left side to add")
+parser.add_argument("--right", dest="right", action="store", type=int, default=0, help="Number of bases at right side to add")
 parser.add_argument("--output", dest="output", action="store", default="extracts.fasta", help="Output file name")
 
 options=parser.parse_args()
@@ -69,6 +71,6 @@ for chromosome in referenceData.keys():
 	# lets get subsequence by chromosome
 	if chromosome in mappingData.keys():
 		for seqid, Start, End in zip(mappingData[chromosome]["IDs"], mappingData[chromosome]["Start"], mappingData[chromosome]["End"]):
-			print(">" + seqid + "\n" + extract_subseq_from_reference(referenceData[chromosome], Start, End, 2, 2) )  # the first 1000 is the number of bases we want to the left of Start and second is the number of bases in right of End position we wnat to extract
+			print(">" + seqid + "\n" + extract_subseq_from_reference(referenceData[chromosome], Start, End, options.left, options.right) )  # the first 1000 is the number of bases we want to the left of Start and second is the number of bases in right of End position we wnat to extract
 
 exit(0)
