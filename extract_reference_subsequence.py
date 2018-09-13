@@ -35,7 +35,7 @@ with open(options.sam) as fsam:
 		line=line.rstrip()
 		if line=="": continue
 		if line.startswith("@"): continue
-		linearray=line.split()
+		linearray=line.split("\t")
 		mapID=linearray[0]
 		mapChr=linearray[2]
 		mapStart=int(linearray[3])
